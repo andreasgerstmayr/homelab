@@ -9,9 +9,13 @@ on:
     - cron: '0 0 * * SAT'
 
 jobs:
-  build-caddy:
-    env:
-      container: caddy
+  build:
+    strategy:
+      matrix:
+        container:
+        - caddy
+        - nextcloud
+        - dnsmasq
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,55 +32,20 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Extract version
-      run: echo VERSION=$(grep -oP "caddy:\K.+" containers/${{ env.container }}/Dockerfile | tail -n1) >> $GITHUB_ENV
+      run: echo VERSION=$(./version.sh) >> $GITHUB_ENV
+      working-directory: containers/${{ matrix.container }}
 
     - name: Extract metadata (tags, labels) for Docker
       id: meta
       uses: docker/metadata-action@v5
       with:
-        images: ghcr.io/${{ github.repository }}/${{ env.container }}
+        images: ghcr.io/${{ github.repository }}/${{ matrix.container }}
         tags: ${{ env.VERSION }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: containers/${{ env.container }}
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-
-  build-nextcloud:
-    env:
-      container: nextcloud
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Log in to the Container registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Extract version
-      run: echo VERSION=$(grep -oP "nextcloud:\K.+" containers/${{ env.container }}/Dockerfile) >> $GITHUB_ENV
-
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ghcr.io/${{ github.repository }}/${{ env.container }}
-        tags: ${{ env.VERSION }}
-
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: containers/${{ env.container }}
+        context: containers/${{ matrix.container }}
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
