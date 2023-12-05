@@ -1,0 +1,3 @@
+[submodule "containers/multicast-relay"]
+	path = containers/multicast-relay
+	url = https://github.com/alsmith/multicast-relay.git

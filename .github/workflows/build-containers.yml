@@ -16,6 +16,7 @@ jobs:
         - caddy
         - nextcloud
         - dnsmasq
+        - multicast-relay
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,6 +24,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        submodules: recursive
 
     - name: Log in to the Container registry
       uses: docker/login-action@v3
@@ -31,8 +34,8 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Extract version
-      run: echo VERSION=$(./version.sh) >> $GITHUB_ENV
+    - name: Extract tag
+      run: echo TAG=$(./tag.sh) >> $GITHUB_ENV
       working-directory: containers/${{ matrix.container }}
 
     - name: Extract metadata (tags, labels) for Docker
@@ -40,7 +43,7 @@ jobs:
       uses: docker/metadata-action@v5
       with:
         images: ghcr.io/${{ github.repository }}/${{ matrix.container }}
-        tags: ${{ env.VERSION }}
+        tags: ${{ env.TAG }}
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
