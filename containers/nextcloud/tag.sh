@@ -1,2 +1,2 @@
 #!/bin/bash
-grep -oP "nextcloud:\K.+" Dockerfile | tail -n1
+grep -oP "nextcloud:\K.+" Dockerfile
