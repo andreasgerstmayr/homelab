@@ -17,6 +17,7 @@ jobs:
         - nextcloud
         - dnsmasq
         - multicast-relay
+        - czkawka
     runs-on: ubuntu-latest
     permissions:
       contents: read
