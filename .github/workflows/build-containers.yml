@@ -18,6 +18,7 @@ jobs:
         - dnsmasq
         - multicast-relay
         - czkawka
+        - k8sdbg
     runs-on: ubuntu-latest
     permissions:
       contents: read
