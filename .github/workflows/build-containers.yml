@@ -18,7 +18,7 @@ jobs:
         - dnsmasq
         - multicast-relay
         - czkawka
-        - k8sdbg
+        - kubedebug
     runs-on: ubuntu-latest
     permissions:
       contents: read
