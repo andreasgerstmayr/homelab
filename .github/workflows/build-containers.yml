@@ -15,10 +15,8 @@ jobs:
       matrix:
         container:
         - caddy
-        - nextcloud
         - dnsmasq
         - multicast-relay
-        - czkawka
         - kubedebug
       fail-fast: false
     runs-on: ubuntu-latest
