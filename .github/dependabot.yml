@@ -6,11 +6,7 @@ updates:
     interval: "weekly"
 
 - package-ecosystem: "docker"
-  directory: "/containers/caddy"
-  schedule:
-    interval: "weekly"
-
-- package-ecosystem: "docker"
-  directory: "/containers/dnsmasq"
+  directories:
+  - /containers/*
   schedule:
     interval: "weekly"

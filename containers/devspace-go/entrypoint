@@ -1,0 +1,4 @@
+#!/bin/bash
+
+echo "$@" > /.devspace/args.txt
+exec sleep infinity

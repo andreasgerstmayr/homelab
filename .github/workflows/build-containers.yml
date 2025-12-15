@@ -14,10 +14,11 @@ jobs:
     strategy:
       matrix:
         container:
-        - caddy
-        - dnsmasq
-        - multicast-relay
-        - kubedebug
+        #- caddy
+        #- dnsmasq
+        #- multicast-relay
+        #- kubedebug
+        - devspace-go
       fail-fast: false
     runs-on: ubuntu-latest
     permissions:
