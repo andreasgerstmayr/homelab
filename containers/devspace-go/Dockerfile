@@ -1,4 +1,4 @@
-FROM golang:1.24
+FROM golang:1.25
 
 RUN mkdir        /workspace /.devspace /.cache && \
     chgrp -R 0   /workspace /.devspace /.cache && \
