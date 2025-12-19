@@ -19,6 +19,7 @@ jobs:
         #- multicast-relay
         #- kubedebug
         - devspace-go
+        - renovate
       fail-fast: false
     runs-on: ubuntu-latest
     permissions:
