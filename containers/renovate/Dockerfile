@@ -1,4 +1,4 @@
-FROM docker.io/renovate/renovate:42
+FROM docker.io/renovate/renovate:43
 
 ARG KUBECTL_VERSION=v1.35.0
 ARG HELM_VERSION=v3.19.4
